@@ -18,4 +18,6 @@ Compatível com toda a linha MHO Keeper 3. Algumas funções podem não estar di
 ## Como contribuir?
 Caso tenha interesse em contribuir na base de códigos basta seguir os seguintes passos:
 - Clonar o projeto;
-- Criar um pull-request com os arquivos desejados, informando o uso dos códigos.
+- Criar branch;
+- Adicionar arquivos/pastas;
+- Criar um pull-request, informando o uso dos códigos.
