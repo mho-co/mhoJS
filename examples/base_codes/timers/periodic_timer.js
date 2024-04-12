@@ -8,5 +8,5 @@ let periodicTimer = function(dox, t_on, t_off){
 };
 
 let loop = function() {
-  periodicTimer(1, 5, 10);
+  periodicTimer(1, 5, 10);//funcao chamada no loop
 };
