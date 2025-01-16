@@ -2223,6 +2223,8 @@ let loop = function() {
 
 ```
 
+
+
 # Exemplos Práticos
 
 Exemplo 1: Hello World
