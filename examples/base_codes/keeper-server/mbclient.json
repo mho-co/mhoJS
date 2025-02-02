@@ -1,0 +1,35 @@
+[
+    {
+      "polling": 500,
+      "timeout": 250,
+      "version": 1
+    },
+    {
+      "fn": "Read DOs",  
+      "sv": 1,
+      "qnt": 16,
+      "fc": 1,
+      "add": 5001
+    },
+    {
+      "fn": "Write DOs",
+      "sv": 1,
+      "qnt": 16,
+      "fc": 15,
+      "add": 5001
+    },
+    {
+      "fn": "Read DIs",
+      "sv": 1,
+      "qnt": 16,
+      "fc": 2,
+      "add": 5001
+    },
+    {
+      "fn": "Read AIs",
+      "sv": 1,
+      "fc": 4,
+      "add": 5001,
+      "qnt": 6
+    }
+  ]
