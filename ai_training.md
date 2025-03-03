@@ -2224,6 +2224,49 @@ let loop = function() {
 ```
 
 
+# sf
+Funções padrão (standard functions).
+
+## toggler_2loadDO
+Utilizada para realizar revezamento de cargas redundantes. A cada ciclo de trabalho uma carga é acionada enquanto a outra descansa. Em caso de um ciclo de alarme (opcional), ambas cargas trabalham. Realiza o acionamento de DOs de forma alternada.
+
+- Utiliza variável de trabalho para realizar o revezamento das cargas;
+- Pode utilizar uma variável de alarme (opcional) para setar todas as cargas;
+- Pode utilizar variáveis de habilita/desabilita carga (útil para quando alguma carga entra em falha);
+- Necessita inicializar memória global para salvar o estado do último ciclo;
+
+```
+let memoriaRevezamento = 0; //variável global
+memoriaRevezamento = sf.toggler_2loadDO(memoriaRevezamento, habilita1, habilita2, carga1, carga2, trabalho, alarme = false);
+```
+Resposta: memória de revezamento atual.
+
+Variáveis:
+- memoriaRevezamento: memória auxiliar que guarda a última carga acionada;
+- habilita1: variável booleana que indica se a carga1 esta apta ao revezamento (false: apto, true: inapto);
+- habilita2: variável booleana que indica se a carga2 esta apta ao revezamento (false: apto, true: inapto);
+- carga1: número da DO que a carga1 está conectada;
+- carga2: número da DO que a carga2 está conectada;
+- trabalho: variável booleana de controle do revezamento (false: desliga cargas, true: carga em trabalho);
+- alarme: variável booleana de alarme (opcional) (false: sem alarme, true: ligar todas as cargas em trabalho);
+
+### Exemplo
+No exemplo abaixo temos duas cargas trabalhando de forma redundante. Em caso de nível de alarme ambas as cargas entram em funcionamento e só param quando sair do nível de trabalho. Em caso de falha em uma das cargas, a outra assume e o revezamento é cessado enquanto a falha permanecer ativa. Neste exemplo temos que as condições de trabalho e alarme estão sendo definidas via leitura de entradas digitais. Essas leituras podem representar um status vindo de uma boia, relé de nível ou controlador externo por exemplo. Também temos que as variáveis de habilita estão sendo obtidas via leitura de entradas digitais, que neste caso poderia ser a leitura de estado de um disjuntor motor ou relé de sobrecarga.
+
+```
+let memoriaRevezamento = 0;  // memória global auxiliar
+
+let revezaBombas = function() {
+  let trabalho = io.readDI(1);
+  let alarme = io.readDI(2);
+  memoriaRevezamento = sf.toggler_2loadDO(memoriaRevezamento, io.readDI(3), io.readDI(4), 1, 2, trabalho, alarme);
+};
+
+let loop = function() { 
+  revezaBombas();
+};
+```
+
 
 # Exemplos Práticos
 
@@ -2316,5 +2359,37 @@ let loop = function() {
 ```
 
 # Exemplos Avançados
+Exemplo 2.1: Utilizar um setpoint no mho cloud para definir um valor de uma variavel local do programa. Para fazer isso precisamos ter um arquivo de setpoint em json, com os dados incicializados que serão manipulados e salvos quando houver mudança pelo mho cloud.
+
+Arquivo /js/setpoints.json
+```
+{
+    "ex_bool": true,
+    "ex_string": "abc",
+    "ex_number": 123
+}
+```
+
+
+
+Arquivo /js/main.js
+```
+cloud.setAtt('ex_bool,ex_number,ex_string'); //definicao das tags remotas de interesse
+let sp = fjson.open(); //carrega arquivo JSON da memoria, nesse caso o caminho é "/js/setpoints.json".
+
+//funcao chamada quando chega uma mensagem
+let sa_callback = function(obj) {
+  //log("sa_callback => ", obj);
+  if(haskey(obj, 'ex_bool')) sp.ex_bool = obj.ex_bool;
+  if(haskey(obj, 'ex_number')) sp.ex_number = obj.ex_number;
+  if(haskey(obj, 'ex_string')) sp.ex_string = obj.ex_string;
+  fjson.create(sp, true); //sobrescreve arquivo de setpoints
+};
+
+let loop = function() {
+  log(sp);
+  delay(1000);
+};
+```
 
 # Exemplos Reais
