@@ -55,6 +55,11 @@ Os seguintes itens não são suportados, em seguida temos a alternativa que deve
 - Sem `arrays`, `closures`, `prototypes`, `this`, `new` e `delete`;
 - Sem bibliotecas padrão como `Date`, `Regexp`, `Function`, `String` e `Number`
 
+
+As variáveis declaradas no programa não podem ser declaradas com nenhum tipo de nome padrão do Javascript, como por exemplo: do, let, if, function. Ou mesmo qualquer outra função definida aqui.
+Quando for usar a declaração de uma variavel ou atributo que faz referencia para um AI, DI, DO, MB, MI, AO, declare como aix, dix, dox, mbx, mix, aox.
+
+
 # Funções Disponíveis
 
 Funções de uso geral dentro do ambiente mhoJS.
