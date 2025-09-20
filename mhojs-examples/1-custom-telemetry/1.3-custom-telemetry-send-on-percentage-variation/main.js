@@ -24,6 +24,7 @@ let variou_percentual = function(atual, anterior, percentual) {
   return false;
 };
 
+//funcao chamada a cada ciclo de processamento do loop
 let enviar_ai = function() {
   let atual = io.readAI(1, 'i', 0, 100);
   if (variou_percentual(atual, ultimo_valor, variacao_minima)) {
@@ -39,6 +40,7 @@ let loop = function() {
   enviar_ai();
 };
 
+//funcao chamada a cada X segundos
 let send_tel = function() {
   let atual = io.readAI(1, 'i', 0, 100);
   if (cloud.send_double(2, atual)) {

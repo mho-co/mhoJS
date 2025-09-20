@@ -9,6 +9,7 @@ let setup = function() {
   // Nenhuma inicializacao especial necessaria
 };
 
+//funcao chamada a cada ciclo de processamento do loop
 let enviar_telemetria = function() {
   let atual = mbc.MI(1);
   if (atual !== ultimo) {
@@ -22,6 +23,7 @@ let loop = function() {
   enviar_telemetria();
 };
 
+//funcao chamada a cada X segundos
 let send_tel = function() {
   let atual = mbc.MI(1);
   if(cloud.send_int(1, atual)) {
